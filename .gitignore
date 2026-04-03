@@ -1,0 +1,58 @@
+# Compilação
+
+target/
+*.class
+
+# Logs
+
+*.log
+
+# Arquivos temporários
+
+*.tmp
+*.swp
+*.bak
+*.cache
+
+# IDEs
+
+## IntelliJ
+
+.idea/
+*.iml
+
+## Eclipse
+
+.project
+.classpath
+.settings/
+
+## VS Code
+
+.vscode/
+
+# Sistema operacional
+
+## Windows
+
+Thumbs.db
+
+## macOS
+
+.DS_Store
+
+# Maven wrapper (opcional manter)
+
+.mvn/wrapper/maven-wrapper.jar
+
+# Arquivos de build
+
+dependency-reduced-pom.xml
+
+# Arquivos de ambiente
+
+.env
+
+# Backup de arquivos
+
+*.orig
