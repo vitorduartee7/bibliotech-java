@@ -34,15 +34,15 @@ public class MenuUtil {
             case 1: mostrarMenuFazerLogin(); break;
             case 2: mostrarMenuCriarConta(); break;
             case 0:
-                System.out.println("=============");
+                System.out.println("=====================");
                 System.out.println("Encerrando sistema...");
-                System.out.println("=============");
+                System.out.println("=====================");
                 System.exit(0);
                 break;
             default:
-                System.out.println("=============");
+                System.out.println("===============");
                 System.out.println("Opcao invalida!");
-                System.out.println("=============");
+                System.out.println("===============");
                 break;
         }
     }
@@ -56,14 +56,14 @@ public class MenuUtil {
             String nome = authService.getUsuarioLogado().getNome();
             String primeiroNome = nome.split(" ")[0];
 
-            System.out.println("=============");
+            System.out.println("===========================");
             System.out.println("Login efetuado com sucesso!");
             System.out.println("Bem-vindo, " + primeiroNome);
-            System.out.println("=============");
+            System.out.println("===========================");
         } else {
-            System.out.println("=============");
+            System.out.println("==========================");
             System.out.println("Email ou senha incorretos!");
-            System.out.println("=============");
+            System.out.println("==========================");
         }
     }
 
@@ -75,21 +75,21 @@ public class MenuUtil {
         String senha2 = lerString("Digite sua Senha novamente: ");
 
         if(!ValidadorUtil.validarNome(nome)) {
-            System.out.println("=============");
+            System.out.println("==============");
             System.out.println("Nome inválido!");
-            System.out.println("=============");
+            System.out.println("==============");
             return;
         }
 
         if (!ValidadorUtil.validarEmail(email)) {
-            System.out.println("=============");
+            System.out.println("================");
             System.out.println("E-mail invalido!");
-            System.out.println("=============");
+            System.out.println("================");
             return;
         }
 
         if (!ValidadorUtil.validarSenha(senha)) {
-            System.out.println("=============");
+            System.out.println("===============");
             System.out.println("""
                     A senha deve ter:
                             - 8+ caracteres
@@ -97,24 +97,24 @@ public class MenuUtil {
                             - 1 número (0-9)
                             - 1 especial (@#$%^&+=!?-)
                             - 1 minúscula (a-z)""");
-            System.out.println("=============");
+            System.out.println("===============");
             return;
         }
 
         if (!senha2.equals(senha)) {
-            System.out.println("=============");
+            System.out.println("===========================");
             System.out.println("As senhas devem ser iguais!");
-            System.out.println("=============");
+            System.out.println("===========================");
         }
 
         if (authService.cadastrarUsuario(nome, email, senha)) {
-            System.out.println("=============");
+            System.out.println("===============================");
             System.out.println("Cadastro realizado com sucesso!");
-            System.out.println("=============");
+            System.out.println("===============================");
         } else {
-            System.out.println("=============");
+            System.out.println("==================");
             System.out.println("Erro ao cadastrar!");
-            System.out.println("=============");
+            System.out.println("==================");
         }
     }
 
@@ -124,11 +124,14 @@ public class MenuUtil {
         System.out.println("=========================");
         System.out.println("[1] Alugar livro");
         System.out.println("[2] Devolver livro");
-        System.out.println("[3] Cadastrar Livro");
-        System.out.println("[4] Listar Livros");
-        System.out.println("[5] Listar Livros Disponiveis");
-        System.out.println("[6] Listar Livros Alugados");
-        System.out.println("[9] Logout");
+        System.out.println("[3] Meu Historico");
+        System.out.println("[4] Meus Livros Alugados");
+        System.out.println("[5] Meus Livros Devolvidos");
+        System.out.println("[6] Cadastrar Livro");
+        System.out.println("[7] Listar Livros");
+        System.out.println("[8] Livros Disponiveis");
+        System.out.println("[9] Livros Alugados");
+        System.out.println("[10] Logout");
         System.out.println("[0] Sair");
         int opcao = lerInt("Escolha: ");
 
@@ -138,35 +141,41 @@ public class MenuUtil {
             case 2:
                 mostrarMenuDevolverLivro(); break;
             case 3:
-                mostrarMenuCadastrarLivro(); break;
+                emprestimoService.getEmprestimosUsuario(); break;
             case 4:
+                emprestimoService.getEmprestimosAtivos(); break;
+            case 5:
+                emprestimoService.getEmprestimosDevolvidos(); break;
+            case 6:
+                mostrarMenuCadastrarLivro(); break;
+            case 7:
                 if (livroService.getLivros().isEmpty()) {
-                    System.out.println("=============");
+                    System.out.println("============");
                     System.out.println("Lista vazia!");
-                    System.out.println("=============");
+                    System.out.println("============");
                 } else livroService.listarLivros();
                 break;
-            case 5:
+            case 8:
                 livroService.listarLivrosDisponiveis(); break;
-            case 6:
-                livroService.listarLivrosIndisponiveis(); break;
             case 9:
+                livroService.listarLivrosIndisponiveis(); break;
+            case 10:
                 if (authService.fazerLogout()) {
-                    System.out.println("=============");
+                    System.out.println("=================");
                     System.out.println("Logout realizado!");
-                    System.out.println("=============");
+                    System.out.println("=================");
                 }
                 break;
             case 0:
-                System.out.println("=============");
+                System.out.println("=====================");
                 System.out.println("Encerrando sistema...");
-                System.out.println("=============");
+                System.out.println("=====================");
                 System.exit(0);
                 break;
             default:
-                System.out.println("=============");
+                System.out.println("===============");
                 System.out.println("Opcao invalida!");
-                System.out.println("=============");
+                System.out.println("===============");
                 break;
         }
     }
@@ -179,27 +188,27 @@ public class MenuUtil {
         String autor = lerString("Autor: ");
 
         if(titulo.isEmpty()) {
-            System.out.println("=============");
+            System.out.println("================");
             System.out.println("Titulo invalido!");
-            System.out.println("=============");
+            System.out.println("================");
             return;
         }
 
         if(!ValidadorUtil.validarNome(autor)) {
-            System.out.println("=============");
+            System.out.println("===============");
             System.out.println("Autor inválido!");
-            System.out.println("=============");
+            System.out.println("===============");
             return;
         }
 
         if (livroService.cadastrarLivro(titulo, autor)) {
-            System.out.println("=============");
+            System.out.println("=============================");
             System.out.println("Livro cadastrado com sucesso!");
-            System.out.println("=============");
+            System.out.println("=============================");
         } else {
-            System.out.println("=============");
+            System.out.println("==================");
             System.out.println("Erro ao cadastrar!");
-            System.out.println("=============");
+            System.out.println("==================");
         }
     }
 
@@ -215,25 +224,25 @@ public class MenuUtil {
 
         switch (resultado) {
             case USUARIO_NAO_LOGADO:
-                System.out.println("=============");
+                System.out.println("======================");
                 System.out.println("Nenhum Usuario Logado!");
-                System.out.println("=============");
+                System.out.println("======================");
                 break;
             case SUCESSO:
-                System.out.println("=============");
+                System.out.println("==========================");
                 System.out.println("Livro alugado com sucesso!");
                 System.out.println("Voce deve devolver ate " + LocalDate.now().plusDays(30));
-                System.out.println("=============");
+                System.out.println("==========================");
                 break;
             case LIVRO_NAO_ENCONTRADO:
-                System.out.println("=============");
+                System.out.println("=====================");
                 System.out.println("Livro nao encontrado!");
-                System.out.println("=============");
+                System.out.println("=====================");
                 break;
             case LIVRO_INDISPONIVEL:
-                System.out.println("=============");
+                System.out.println("======================");
                 System.out.println("Livro ja esta alugado!");
-                System.out.println("=============");
+                System.out.println("======================");
                 break;
         }
     }
@@ -251,24 +260,24 @@ public class MenuUtil {
 
         switch (resultado) {
             case USUARIO_NAO_LOGADO:
-                System.out.println("=============");
+                System.out.println("======================");
                 System.out.println("Nenhum Usuario Logado!");
-                System.out.println("=============");
+                System.out.println("======================");
                 break;
             case SUCESSO:
-                System.out.println("=============");
+                System.out.println("============================");
                 System.out.println("Livro devolvido com sucesso!");
-                System.out.println("=============");
+                System.out.println("============================");
                 break;
             case LIVRO_NAO_ENCONTRADO:
-                System.out.println("=============");
+                System.out.println("=====================");
                 System.out.println("Livro nao encontrado!");
-                System.out.println("=============");
+                System.out.println("=====================");
                 break;
             case EMPRESTIMO_NAO_ENCONTRADO:
-                System.out.println("=============");
+                System.out.println("==========================");
                 System.out.println("Emprestimo não encontrado!");
-                System.out.println("=============");
+                System.out.println("==========================");
                 break;
         }
     }
@@ -276,9 +285,9 @@ public class MenuUtil {
     public static int lerInt(String mensagem) {
         System.out.print(mensagem);
         while(!input.hasNextInt()) {
-            System.out.println("\n=============");
+            System.out.println("\n======================");
             System.out.println("Digite um numero valido!");
-            System.out.println("=============");
+            System.out.println("========================");
             input.next();
         }
         int valor = input.nextInt();

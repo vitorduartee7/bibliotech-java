@@ -18,6 +18,70 @@ public class EmprestimoService {
         this.authService = authService;
     }
 
+    public void getEmprestimosUsuario() {
+        System.out.println("\n=== BIBLIOTECH HISTORICO ALUGADOS ===");
+
+        boolean encontrou = false;
+
+        for (Emprestimo e : emprestimos){
+            if (e.getUsuario().equals(authService.getUsuarioLogado())) {
+                encontrou = true;
+                System.out.println(e);
+            }
+        }
+
+        if (!encontrou) {
+            System.out.println("============================");
+            System.out.println("Nenhum emprestimo encontrado");
+            System.out.println("============================");
+        }
+
+        System.out.println("==========================================");
+
+    }
+
+    public void getEmprestimosAtivos() {
+        System.out.println("\n=== BIBLIOTECH LIVROS ALUGADOS ===");
+
+        boolean encontrou = false;
+
+        for (Emprestimo e : emprestimos) {
+            if (e.isAtivo()) {
+                encontrou = true;
+                System.out.println(e);
+            }
+        }
+
+        if (!encontrou) {
+            System.out.println("============================");
+            System.out.println("Nenhum emprestimo encontrado");
+            System.out.println("============================");
+        }
+
+        System.out.println("======================================");
+    }
+
+    public void getEmprestimosDevolvidos() {
+        System.out.println("\n=== BIBLIOTECH LIVROS DEVOLVIDOS ===");
+
+        boolean encontrou = false;
+
+        for (Emprestimo e : emprestimos) {
+            if (!e.isAtivo()) {
+                encontrou = true;
+                System.out.println(e);
+            }
+        }
+
+        if (!encontrou) {
+            System.out.println("==============================");
+            System.out.println("Nenhum emprestimo encontrado");
+            System.out.println("==============================");
+        }
+
+        System.out.println("========================================");
+    }
+
     public ResultadoEmprestimo emprestarLivro(int idLivro) {
         if (!authService.isUsuarioLogado())
             return ResultadoEmprestimo.USUARIO_NAO_LOGADO;
@@ -50,7 +114,9 @@ public class EmprestimoService {
         Emprestimo encontrado = null;
 
         for (Emprestimo e : emprestimos) {
-            if (e.getLivro().getId() == idLivro) {
+            if (e.getLivro().getId() == idLivro
+                    && e.isAtivo()
+                    && e.getUsuario().equals(authService.getUsuarioLogado())) {
                 encontrado = e;
                 break;
             }
@@ -59,7 +125,7 @@ public class EmprestimoService {
         if (encontrado == null)
             return ResultadoDevolucao.EMPRESTIMO_NAO_ENCONTRADO;
 
-        emprestimos.remove(encontrado);
+        encontrado.devolver();
         livro.setDisponivel(true);
 
         return ResultadoDevolucao.SUCESSO;
