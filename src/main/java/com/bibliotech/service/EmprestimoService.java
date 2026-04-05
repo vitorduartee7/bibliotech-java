@@ -157,6 +157,33 @@ public class EmprestimoService {
         return ResultadoDevolucao.SUCESSO;
     }
 
+    public String avisosUsuario() {
+        if (!authService.isUsuarioLogado()) return null;
+
+        StringBuilder avisos = new StringBuilder();
+
+        for (Emprestimo e : emprestimos) {
+            if (e.getUsuario().equals(authService.getUsuarioLogado()) && e.isAtivo()) {
+
+                long dias = e.diasRestantes();
+
+                if (e.isAtrasado()) {
+                    avisos.append("\n⚠ ATRASADO: ")
+                            .append(e.getLivro().getTitulo())
+                            .append("\n");
+                } else if (dias <= 3) {
+                    avisos.append("\n⏳ Vencendo em ")
+                            .append(dias)
+                            .append(" dias: ")
+                            .append(e.getLivro().getTitulo())
+                            .append("\n");
+                }
+            }
+        }
+
+        return (!avisos.isEmpty()) ? avisos.toString() : null;
+    }
+
     public boolean usuarioBloqueado() {
         for (Emprestimo e : emprestimos) {
             if (e.getUsuario().equals(authService.getUsuarioLogado())

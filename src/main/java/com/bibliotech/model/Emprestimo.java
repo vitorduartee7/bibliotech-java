@@ -40,8 +40,7 @@ public class Emprestimo {
     }
 
     public long diasRestantes() {
-        long dias = ChronoUnit.DAYS.between(LocalDate.now(), dataDevolucao);
-        return Math.max(dias, 0);
+        return ChronoUnit.DAYS.between(LocalDate.now(), dataDevolucao);
     }
 
     public void devolver() {

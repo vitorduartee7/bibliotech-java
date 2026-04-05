@@ -124,6 +124,15 @@ public class MenuUtil {
         System.out.println("Livros em posse: "
                 + emprestimoService.getLivrosAlugados() + "/"
                 + emprestimoService.getLimiteLivrosAlugados());
+
+        String avisos = emprestimoService.avisosUsuario();
+
+        if (avisos != null) {
+            System.out.println("\n=== AVISOS ===");
+            System.out.println(avisos);
+            System.out.println("==============");
+        }
+
         System.out.println("=========================");
         System.out.println("[1] Alugar livro");
         System.out.println("[2] Devolver livro");
