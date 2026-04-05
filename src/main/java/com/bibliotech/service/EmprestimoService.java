@@ -12,7 +12,8 @@ public class EmprestimoService {
     private final LivroService livroService;
     private final AuthService authService;
     private final List<Emprestimo> emprestimos = new ArrayList<>();
-    int LIMITE_LIVROS = 3;
+    private final int LIMITE_LIVROS = 3;
+    private final int LIMITE_ATRASO_BAN = 7;
 
     public EmprestimoService(AuthService authService, LivroService livroService) {
         this.livroService = livroService;
@@ -102,11 +103,40 @@ public class EmprestimoService {
         return total;
     }
 
+    public boolean isUsuarioBloqueado() {
+        for (Emprestimo e : emprestimos) {
+            if (e.getUsuario().equals(authService.getUsuarioLogado())
+                    && e.isAtivo()
+                    && e.isAtrasado()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isUsuarioBanido() {
+        if (!authService.isUsuarioLogado()) return false;
+
+        for (Emprestimo e : emprestimos) {
+            if (e.getUsuario().equals(authService.getUsuarioLogado())
+                    && e.isAtivo()
+                    && e.isAtrasado()
+                    && Math.abs(e.diasRestantes()) > LIMITE_ATRASO_BAN) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public ResultadoEmprestimo emprestarLivro(int idLivro) {
         if (!authService.isUsuarioLogado())
             return ResultadoEmprestimo.USUARIO_NAO_LOGADO;
 
-        if (usuarioBloqueado())
+        if (isUsuarioBanido())
+            return ResultadoEmprestimo.USUARIO_BANIDO;
+
+        if (isUsuarioBloqueado())
             return ResultadoEmprestimo.USUARIO_BLOQUEADO;
 
         Livro livro = livroService.buscarLivro(idLivro);
@@ -182,16 +212,5 @@ public class EmprestimoService {
         }
 
         return (!avisos.isEmpty()) ? avisos.toString() : null;
-    }
-
-    public boolean usuarioBloqueado() {
-        for (Emprestimo e : emprestimos) {
-            if (e.getUsuario().equals(authService.getUsuarioLogado())
-                    && e.isAtivo()
-                    && e.isAtrasado()) {
-                return true;
-            }
-        }
-        return false;
     }
 }

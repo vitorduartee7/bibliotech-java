@@ -246,6 +246,11 @@ public class MenuUtil {
                 System.out.println("Voce possui livros atrasados.");
                 System.out.println("=============================");
                 break;
+            case USUARIO_BANIDO:
+                System.out.println("===============");
+                System.out.println("Usuario Banido!");
+                System.out.println("===============");
+                break;
             case SUCESSO:
                 System.out.println("==========================");
                 System.out.println("Livro alugado com sucesso!");
