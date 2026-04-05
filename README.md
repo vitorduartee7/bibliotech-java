@@ -1,72 +1,135 @@
-# 📚 Bibliotech CLI
+# 📚 Bibliotech – Sistema de Biblioteca em Java (CLI)
 
-Sistema de gerenciamento de biblioteca via terminal desenvolvido em Java utilizando Maven.
+O **Bibliotech** é um sistema de gerenciamento de biblioteca via terminal, desenvolvido em **Java**, com foco em arquitetura limpa, regras de negócio realistas e organização de código profissional.
 
-## 🎯 Objetivo
+Este projeto simula o funcionamento de um sistema real, indo além de um CRUD simples, incluindo controle de usuários, empréstimos, validações e automações.
 
-Projeto desenvolvido para prática de Java, lógica de programação e construção de aplicações estruturadas para portfólio.
+---
+
+## 🎯 Objetivo do Projeto
+
+Demonstrar capacidade de desenvolver um sistema completo com:
+
+* Regras de negócio reais
+* Organização profissional de código
+* Pensamento escalável
+* Experiência de usuário mesmo em CLI
+
+---
 
 ## 🚀 Funcionalidades
 
-* 🔐 Cadastro e login de usuários
-* 📚 Cadastro de livros
-* 📖 Listagem de livros
-* 🔄 Empréstimo de livros
-* 🔁 Devolução de livros
-* 📊 Controle de disponibilidade
-* 🧠 Validações de dados (nome, email e senha)
+### 👤 Usuários
 
-## 🧠 Conceitos aplicados
+* Cadastro com validação (nome, email e senha)
+* Login e logout
+* Controle de sessão (usuário logado)
 
-* Encapsulamento
-* Separação de responsabilidades
-* Clean Code
-* Validação de dados
-* Fluxo de autenticação
-* Regras de negócio
+### 📖 Livros
 
-## 🧱 Tecnologias utilizadas
+* Cadastro de livros
+* Listagem geral
+* Listagem por status:
 
-* Java 21
-* Maven
-* Programação Orientada a Objetos (POO)
+  * Disponíveis
+  * Alugados
 
-## 📁 Estrutura do projeto
+### 🔄 Empréstimos
+
+* Empréstimo de livros
+* Devolução de livros
+* Histórico completo por usuário
+* Controle de status (ativo/devolvido)
+
+---
+
+## ⚙️ Regras de Negócio
+
+* 📌 Limite de livros por usuário (ex: 3 simultâneos)
+* 🚫 Bloqueio automático em caso de atraso
+* ⛔ Banimento por atraso prolongado
+* 🔓 Desbloqueio automático após devolução
+* 📅 Prazo automático de devolução (30 dias)
+* ⏳ Cálculo de dias restantes
+* ⚠️ Identificação de atraso automático
+
+---
+
+## 🔔 Sistema de Notificações
+
+O sistema exibe avisos inteligentes no menu:
+
+* ⏳ “Faltam X dias para vencer”
+* ⚠️ “Livro atrasado”
+* 🚫 Usuário bloqueado
+* ⛔ Usuário banido
+
+Os avisos só aparecem quando necessário, evitando poluição visual.
+
+---
+
+## 🏗 Arquitetura
+
+Projeto organizado em camadas:
 
 ```
 com.bibliotech
-├── main        → Classe principal
-├── model       → Entidades (Usuario, Livro, Emprestimo)
-├── service     → Regras de negócio
-├── util        → Utilitários (menu, validações)
-└── enums       → Estados e resultados
+├── model      -> Entidades (Livro, Usuario, Emprestimo)
+├── service    -> Regras de negócio
+├── util       -> Menu, validações e entrada de dados
+├── enums      -> Estados e resultados
+└── main       -> Execução do sistema
 ```
+
+### ✔️ Boas práticas aplicadas:
+
+* Programação Orientada a Objetos (POO)
+* Encapsulamento e imutabilidade
+* Separação de responsabilidades
+* Service Layer
+* Uso de Enums
+* Código modular e escalável
+
+---
+
+## 💡 Tecnologias
+
+* Java
+* CLI (Console)
+* Estruturas de dados (List)
+* API de datas (`LocalDate`)
+
+---
 
 ## ▶️ Como executar
 
 1. Clone o repositório:
 
-```
+```bash
 git clone https://github.com/seu-usuario/bibliotech.git
 ```
 
-2. Acesse a pasta:
+2. Compile o projeto:
 
-```
-cd bibliotech
-```
-
-3. Compile o projeto:
-
-```
-mvn clean install
+```bash
+javac Main.java
 ```
 
-4. Execute:
+3. Execute:
 
+```bash
+java Main
 ```
-mvn exec:java
-```
+
 ---
 
-💻 Desenvolvido por Vitor Duarte
+## 📬 Contato
+
+Sinta-se à vontade para contribuir ou dar feedback!
+www.linkedin.com/in/vitorduartee
+
+---
+
+## 🏷 Tags
+
+`Java` `POO` `Backend` `CLI` `CleanCode` `Portfolio` `Sistema`
