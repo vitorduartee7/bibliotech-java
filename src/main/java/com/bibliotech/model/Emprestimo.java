@@ -50,13 +50,12 @@ public class Emprestimo {
 
     @Override
     public String toString() {
-        return "\n-------------------------" +
+        return "-------------------------" +
                 "\nLivro: " + livro.getTitulo() +
                 "\nUsuario: " + usuario.getNome() +
                 "\nEmprestado em: " + dataEmprestimo +
                 "\nDevolucao prevista: " + dataDevolucao +
                 "\nDias restantes: " + (ativo ? diasRestantes() : "-") +
-                "\nAtrasado: " + (isAtrasado() ? "SIM" : "EM DIA") +
                 "\nDevolvido em: " + (dataDevolvido != null ? dataDevolvido : "PENDENTE") +
                 "\nStatus: " + getStatus() +
                 "\n-------------------------";
