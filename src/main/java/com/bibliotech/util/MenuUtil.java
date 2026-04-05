@@ -121,6 +121,9 @@ public class MenuUtil {
     public static void mostrarMenuPrincipal() {
         System.out.println("\n=== BIBLIOTECH MENU ===");
         System.out.println(authService.getUsuarioLogado());
+        System.out.println("Livros em posse: "
+                + emprestimoService.getLivrosAlugados() + "/"
+                + emprestimoService.getLimiteLivrosAlugados());
         System.out.println("=========================");
         System.out.println("[1] Alugar livro");
         System.out.println("[2] Devolver livro");
@@ -244,6 +247,10 @@ public class MenuUtil {
                 System.out.println("Livro ja esta alugado!");
                 System.out.println("======================");
                 break;
+            case LIMITE_ATINGIDO:
+                System.out.println("================");
+                System.out.println("Limite atingido!");
+                System.out.println("================");
         }
     }
 

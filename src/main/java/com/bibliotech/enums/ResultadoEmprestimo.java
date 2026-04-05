@@ -4,5 +4,6 @@ public enum ResultadoEmprestimo {
     SUCESSO,
     LIVRO_NAO_ENCONTRADO,
     LIVRO_INDISPONIVEL,
+    LIMITE_ATINGIDO,
     USUARIO_NAO_LOGADO
 }

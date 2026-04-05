@@ -12,10 +12,15 @@ public class EmprestimoService {
     private final LivroService livroService;
     private final AuthService authService;
     private final List<Emprestimo> emprestimos = new ArrayList<>();
+    int LIMITE_LIVROS = 3;
 
     public EmprestimoService(AuthService authService, LivroService livroService) {
         this.livroService = livroService;
         this.authService = authService;
+    }
+
+    public int getLimiteLivrosAlugados() {
+        return LIMITE_LIVROS;
     }
 
     public void getEmprestimosUsuario() {
@@ -46,7 +51,8 @@ public class EmprestimoService {
         boolean encontrou = false;
 
         for (Emprestimo e : emprestimos) {
-            if (e.isAtivo()) {
+            if (e.isAtivo() &&
+                    e.getUsuario().equals(authService.getUsuarioLogado())) {
                 encontrou = true;
                 System.out.println(e);
             }
@@ -67,7 +73,8 @@ public class EmprestimoService {
         boolean encontrou = false;
 
         for (Emprestimo e : emprestimos) {
-            if (!e.isAtivo()) {
+            if (!e.isAtivo() &&
+                    e.getUsuario().equals(authService.getUsuarioLogado())) {
                 encontrou = true;
                 System.out.println(e);
             }
@@ -82,6 +89,19 @@ public class EmprestimoService {
         System.out.println("========================================");
     }
 
+    public int getLivrosAlugados() {
+        int total = 0;
+
+        for (Emprestimo e : emprestimos) {
+            if (e.getUsuario().equals(authService.getUsuarioLogado())
+                    && e.isAtivo()) {
+                total++;
+            }
+        }
+
+        return total;
+    }
+
     public ResultadoEmprestimo emprestarLivro(int idLivro) {
         if (!authService.isUsuarioLogado())
             return ResultadoEmprestimo.USUARIO_NAO_LOGADO;
@@ -93,6 +113,9 @@ public class EmprestimoService {
 
         if (!livro.isDisponivel())
             return ResultadoEmprestimo.LIVRO_INDISPONIVEL;
+
+        if (getLivrosAlugados() >= LIMITE_LIVROS)
+            return ResultadoEmprestimo.LIMITE_ATINGIDO;
 
         Emprestimo emprestimo = new Emprestimo(authService.getUsuarioLogado(),livro);
 
