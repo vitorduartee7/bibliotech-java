@@ -106,6 +106,9 @@ public class EmprestimoService {
         if (!authService.isUsuarioLogado())
             return ResultadoEmprestimo.USUARIO_NAO_LOGADO;
 
+        if (usuarioBloqueado())
+            return ResultadoEmprestimo.USUARIO_BLOQUEADO;
+
         Livro livro = livroService.buscarLivro(idLivro);
 
         if (livro == null)
@@ -152,5 +155,16 @@ public class EmprestimoService {
         livro.setDisponivel(true);
 
         return ResultadoDevolucao.SUCESSO;
+    }
+
+    public boolean usuarioBloqueado() {
+        for (Emprestimo e : emprestimos) {
+            if (e.getUsuario().equals(authService.getUsuarioLogado())
+                    && e.isAtivo()
+                    && e.isAtrasado()) {
+                return true;
+            }
+        }
+        return false;
     }
 }

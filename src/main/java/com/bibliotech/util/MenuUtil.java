@@ -231,10 +231,16 @@ public class MenuUtil {
                 System.out.println("Nenhum Usuario Logado!");
                 System.out.println("======================");
                 break;
+            case USUARIO_BLOQUEADO:
+                System.out.println("=============================");
+                System.out.println("Usuario Bloqueado!");
+                System.out.println("Voce possui livros atrasados.");
+                System.out.println("=============================");
+                break;
             case SUCESSO:
                 System.out.println("==========================");
                 System.out.println("Livro alugado com sucesso!");
-                System.out.println("Voce deve devolver ate " + LocalDate.now().plusDays(30));
+                System.out.println("Devolver ate " + LocalDate.now().plusDays(30));
                 System.out.println("==========================");
                 break;
             case LIVRO_NAO_ENCONTRADO:
@@ -251,6 +257,7 @@ public class MenuUtil {
                 System.out.println("================");
                 System.out.println("Limite atingido!");
                 System.out.println("================");
+                break;
         }
     }
 
@@ -292,7 +299,7 @@ public class MenuUtil {
     public static int lerInt(String mensagem) {
         System.out.print(mensagem);
         while(!input.hasNextInt()) {
-            System.out.println("\n======================");
+            System.out.println("========================");
             System.out.println("Digite um numero valido!");
             System.out.println("========================");
             input.next();
