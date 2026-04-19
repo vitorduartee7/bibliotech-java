@@ -10,7 +10,9 @@ import com.bibliotech.enums.ResultadoDevolucao;
 import java.time.LocalDate;
 import java.util.Scanner;
 
-public class MenuUtil {
+public class
+
+MenuUtil {
     private static final Scanner input = new Scanner(System.in);
     private static final AuthService authService = new AuthService();
     private static final LivroService livroService = new LivroService();
@@ -64,6 +66,7 @@ public class MenuUtil {
             System.out.println("==========================");
             System.out.println("Email ou senha incorretos!");
             System.out.println("==========================");
+            mostrarMenuFazerLogin();
         }
     }
 
@@ -105,6 +108,7 @@ public class MenuUtil {
             System.out.println("===========================");
             System.out.println("As senhas devem ser iguais!");
             System.out.println("===========================");
+            return;
         }
 
         if (authService.cadastrarUsuario(nome, email, senha)) {
